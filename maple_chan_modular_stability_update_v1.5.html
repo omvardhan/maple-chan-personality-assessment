@@ -1,0 +1,302 @@
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Maple Chan | Celestial Personality Assessment V1.2</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#c3c6d7", "surface-bright": "#38393a", "outline-variant": "#46464c", "background": "#121414",
+                        "surface-variant": "#333535", "surface-container-high": "#292a2a", "on-surface-variant": "#c7c6cc",
+                        "secondary-container": "#6e06d0", "on-error": "#690005", "surface-tint": "#c3c6d7",
+                        "inverse-on-surface": "#2f3131", "tertiary-fixed": "#ffe16d", "primary-container": "#0a0e1a",
+                        "on-secondary-fixed-variant": "#6200bc", "primary-fixed": "#dfe2f3", "surface-container": "#1e2020",
+                        "on-tertiary-fixed": "#221b00", "on-surface": "#e3e2e2", "on-secondary-fixed": "#290055",
+                        "tertiary": "#e9c400", "on-secondary": "#450086", "on-tertiary": "#3a3000", "secondary-fixed": "#eddcff",
+                        "primary-fixed-dim": "#c3c6d7", "on-tertiary-container": "#917a00", "tertiary-fixed-dim": "#e9c400",
+                        "on-background": "#e3e2e2", "on-secondary-container": "#d5b5ff", "surface-dim": "#121414",
+                        "secondary": "#d8b9ff", "on-primary": "#2c303d", "secondary-fixed-dim": "#d8b9ff",
+                        "on-error-container": "#ffdad6", "inverse-surface": "#e3e2e2", "inverse-primary": "#5a5e6d",
+                        "error": "#ffb4ab", "tertiary-container": "#130e00", "on-primary-fixed-variant": "#434654",
+                        "surface-container-lowest": "#0d0e0f", "surface": "#121414", "surface-container-highest": "#333535",
+                        "outline": "#909096", "on-tertiary-fixed-variant": "#544600", "on-primary-container": "#777b8a",
+                        "surface-container-low": "#1a1c1c", "on-primary-fixed": "#171b28", "error-container": "#93000a"
+                    },
+                    "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                    "spacing": { "unit": "8px", "margin-desktop": "40px", "margin-mobile": "20px", "gutter": "24px", "container-max": "1200px" },
+                    "fontFamily": { "headline-md": ["Plus Jakarta Sans"], "display-lg-mobile": ["Plus Jakarta Sans"], "body-md": ["Plus Jakarta Sans"], "label-sm": ["Plus Jakarta Sans"], "body-lg": ["Plus Jakarta Sans"], "display-lg": ["Plus Jakarta Sans"] },
+                    "fontSize": { "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}], "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}], "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}], "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}], "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}], "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}] }
+                },
+            },
+        }
+    </script>
+<style>
+        body { background-color: #0a0b10; overflow-x: hidden; color: #e3e2e2; }
+        .celestial-bg { background: radial-gradient(circle at top right, #1a1b2e 0%, #0a0b10 100%); position: fixed; inset: 0; z-index: -2; }
+        .aurora-blur { position: fixed; width: 100vw; height: 100vh; background: linear-gradient(45deg, rgba(138,43,226,0.1), rgba(0,255,255,0.05), rgba(255,215,0,0.05)); filter: blur(120px); z-index: -1; animation: aurora-flow 20s infinite alternate linear; }
+        @keyframes aurora-flow { 0% { transform: translate(-10%, -10%) rotate(0deg); } 100% { transform: translate(10%, 10%) rotate(10deg); } }
+        .glass-panel { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); }
+        .moonlight-border { border-top: 1px solid rgba(255, 255, 255, 0.2); border-left: 1px solid rgba(255, 255, 255, 0.1); }
+        .hidden-screen { display: none !important; }
+        .radar-chart { filter: drop-shadow(0 0 10px rgba(195, 198, 215, 0.4)); }
+        .float-animation { animation: float 6s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        .reveal-glow { text-shadow: 0 0 20px rgba(195, 198, 215, 0.8), 0 0 40px rgba(195, 198, 215, 0.4); }
+        .loading-fade { transition: opacity 0.5s ease-in-out; }
+        #toast { visibility: hidden; min-width: 250px; margin-left: -125px; background-color: #1e2020; color: #e3e2e2; text-align: center; border-radius: 50px; padding: 16px; position: fixed; z-index: 101; left: 50%; bottom: 30px; font-size: 14px; border: 1px solid rgba(195, 198, 215, 0.3); box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); }
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+    </style>
+</head>
+<body class="font-body-md text-body-md selection:bg-secondary/30">
+<div id="toast">✨ Guardian message copied successfully ✨</div>
+<div class="celestial-bg"></div>
+<div class="aurora-blur"></div>
+<header class="fixed top-0 w-full bg-surface/40 backdrop-blur-3xl border-b border-white/20 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 z-50" id="main-nav">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary font-headline-md" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="font-headline-md text-headline-md font-bold text-primary">Maple Chan</span>
+</div>
+<div class="hidden md:flex gap-8">
+<a class="text-primary font-bold border-b-2 border-primary pb-1" href="#">Discovery</a>
+<a class="text-on-surface-variant font-medium hover:text-tertiary transition-colors" href="#">Spirit Guide</a>
+<a class="text-on-surface-variant font-medium hover:text-tertiary transition-colors" href="#">Cosmos</a>
+</div>
+<button class="material-symbols-outlined text-primary">account_circle</button>
+</header>
+<main class="relative min-h-screen pt-24 pb-32">
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop flex flex-col items-center justify-center text-center py-20" id="screen-start">
+<div class="relative mb-12">
+<div class="absolute inset-0 bg-primary/20 blur-3xl rounded-full scale-150 animate-pulse"></div>
+<span class="material-symbols-outlined text-[80px] text-primary relative" style="font-variation-settings: 'FILL' 1;">star_half</span>
+</div>
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-background mb-6 max-w-3xl">
+                Discover the <span class="text-primary italic">guardian spirit</span> that reflects your inner nature.
+            </h1>
+<p class="text-on-surface-variant text-body-lg max-w-xl mb-12 opacity-80">Embark on a celestial journey to reveal the cosmic forces guiding your path.</p>
+<button class="group relative px-12 py-4 bg-gradient-to-r from-secondary-container to-secondary rounded-full font-bold text-white shadow-lg active:scale-95" onclick="transitionTo('screen-name')">
+<span class="relative z-10 flex items-center gap-2">Begin Journey <span class="material-symbols-outlined">arrow_forward</span></span>
+</button>
+</section>
+<section class="hidden-screen max-w-3xl mx-auto px-margin-mobile py-20 text-center" id="screen-name">
+<h2 class="font-headline-md text-headline-md text-on-background mb-12">What should we call you?</h2>
+<input class="w-full bg-transparent border-0 border-b-2 border-outline-variant focus:border-primary focus:ring-0 text-[32px] md:text-[48px] font-bold py-4 text-center focus:outline-none" id="user-name" placeholder="Enter your name..." type="text"/>
+<button class="mt-16 px-10 py-3 glass-panel rounded-full text-primary border-primary/30" onclick="startQuiz()">Continue</button>
+</section>
+<section class="hidden-screen max-w-4xl mx-auto px-margin-mobile py-10" id="screen-quiz">
+<div class="mb-12">
+<div class="flex justify-between items-end mb-4">
+<span class="text-on-surface-variant font-label-sm" id="question-counter">Question 1 of 15</span>
+<div class="w-24 h-1 bg-surface-container-highest rounded-full overflow-hidden"><div class="h-full bg-primary" id="progress-bar" style="width: 6.66%"></div></div>
+</div>
+<div class="h-24 flex items-center"><h3 class="font-headline-md text-headline-md text-on-background" id="question-text"></h3></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="answer-options"></div>
+</section>
+<section class="hidden-screen fixed inset-0 z-[100] bg-surface/90 backdrop-blur-xl flex flex-col items-center justify-center text-center" id="screen-loading">
+<div class="relative w-48 h-48 mb-8 flex items-center justify-center">
+<div class="absolute inset-8 border-4 border-t-primary rounded-full animate-spin"></div>
+<span class="material-symbols-outlined text-5xl text-primary animate-pulse" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<p class="text-headline-md text-primary font-bold reveal-glow opacity-0 loading-fade" id="loading-status">✨ YOUR GUARDIAN HAS AWAKENED ✨</p>
+<p class="text-on-surface-variant opacity-0 loading-fade" id="loading-subtext">Listening to the stars...</p>
+</section>
+<section class="hidden-screen max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-10 space-y-16" id="screen-results">
+<div class="grid lg:grid-cols-2 gap-12 items-center">
+<div class="order-2 lg:order-1">
+<div class="inline-block px-4 py-1 rounded-full glass-panel border-primary/20 text-primary font-label-sm mb-4">YOUR GUARDIAN REVEALED</div>
+<h2 class="font-display-lg text-display-lg mb-2" id="result-greeting"></h2>
+<h3 class="font-display-lg text-secondary" id="result-guardian-name"></h3>
+<div class="text-primary font-bold text-lg tracking-widest mb-6" id="result-resonance"></div>
+<div class="glass-panel p-8 rounded-2xl mb-8 border-primary/10 relative overflow-hidden">
+<div class="absolute top-4 right-6 opacity-10 text-6xl" id="guardian-symbol-bg">🌙</div>
+<p class="text-body-lg text-on-surface italic mb-4" id="result-guardian-message"></p>
+<p class="text-body-md text-on-surface-variant/90" id="result-guardian-description"></p>
+</div>
+<div class="flex flex-wrap gap-4 mb-8">
+<div class="flex items-center gap-2 px-4 py-2 glass-panel rounded-lg"><span class="material-symbols-outlined text-primary" id="result-element-icon"></span><span class="font-label-sm uppercase" id="result-element"></span></div>
+<div class="flex items-center gap-2 px-4 py-2 glass-panel rounded-lg"><span class="material-symbols-outlined text-primary">psychology_alt</span><span class="font-label-sm uppercase" id="result-meaning"></span></div>
+</div>
+</div>
+<div class="order-1 lg:order-2 flex justify-center"><img class="w-full max-w-md drop-shadow-xl float-animation" id="result-image" src=""/></div>
+</div>
+<div class="grid lg:grid-cols-3 gap-6">
+<div class="lg:col-span-2 glass-panel p-8 rounded-3xl moonlight-border flex flex-col md:flex-row items-center gap-8">
+<div class="w-full max-w-[280px]"><canvas class="radar-chart w-full aspect-square" id="radarChart"></canvas></div>
+<div class="flex-1 w-full"><h4 class="font-headline-md text-headline-md mb-6">Your Energies</h4><div class="space-y-4" id="trait-highlights"></div></div>
+</div>
+<div class="glass-panel p-8 rounded-3xl moonlight-border">
+<h4 class="font-headline-md text-headline-md mb-6">Why This Match?</h4>
+<p class="text-on-surface-variant mb-8" id="result-why"></p>
+<h5 class="font-label-sm uppercase tracking-widest text-primary/60 mb-4">Other Resonance</h5>
+<div class="space-y-3" id="secondary-matches"></div>
+</div>
+</div>
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="glass-panel p-8 rounded-3xl" id="comp-box"></div>
+<div class="glass-panel p-8 rounded-3xl">
+<h5 class="flex items-center gap-3 text-headline-md font-bold mb-4"><span class="material-symbols-outlined text-tertiary">bolt</span> Essence</h5>
+<div class="space-y-4">
+<div><span class="text-primary font-bold block">Key Strengths</span><ul class="text-on-surface-variant text-sm list-disc list-inside" id="result-strengths"></ul></div>
+<div><span class="text-error font-bold block">Path of Growth</span><p class="text-on-surface-variant text-sm" id="result-growth"></p></div>
+</div>
+</div>
+<div class="glass-panel p-8 rounded-3xl bg-gradient-to-br from-primary/10 to-transparent flex flex-col items-center text-center">
+<div class="w-full aspect-[4/5] bg-surface/60 rounded-2xl border border-white/10 p-6 flex flex-col items-center justify-between mb-6 shadow-2xl relative overflow-hidden" id="share-card">
+<div class="flex flex-col items-center"><span class="material-symbols-outlined text-3xl text-primary">auto_awesome</span><h4 class="font-bold" id="share-name"></h4><p class="text-[10px] uppercase tracking-widest">Celestial Spirit</p></div>
+<div class="w-24 h-24 rounded-full bg-primary/10 border p-2 flex items-center justify-center"><img class="w-full h-full object-contain" id="mini-result-img" src=""/></div>
+<div><h3 class="text-primary font-bold" id="share-guardian"></h3><p class="text-[8px] mt-1">© 2024 Maple Chan</p></div>
+</div>
+<button class="w-full py-4 bg-primary text-surface font-bold rounded-xl active:scale-95 flex items-center justify-center gap-2" id="btn-share"><span class="material-symbols-outlined text-sm">share</span> Share Spirit</button>
+</div>
+</div>
+<div class="text-center"><button class="px-8 py-3 glass-panel rounded-full text-on-surface-variant" onclick="location.reload()">New Journey</button></div>
+</section>
+</main>
+<footer class="w-full bg-surface-container-low/30 border-t border-white/10 flex flex-col md:flex-row justify-between items-center px-margin-mobile py-8 gap-4">
+<div class="text-xs text-on-surface-variant text-center md:text-left">Built by Om Vardhan Singh • Maple Chan V1.2</div>
+<div class="flex gap-6"><a class="text-xs hover:text-secondary" href="#">About</a><a class="text-xs hover:text-secondary" href="#">Research</a></div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script id="guardians.js">
+        const traits = ["Courage", "Kindness", "Wisdom", "Intuition", "Creativity", "Resilience", "Patience", "Ambition", "Empathy", "Truth", "Stability", "Spirituality"];
+        const archetypes = [
+            { name: "Moon Guardian", id: "moon", img: "https://lh3.googleusercontent.com/aida/AP1WRLvQYK4qaNUROezRKF-BZNmhL7x49kHmB7Q87UftgUHr_Rs3eBunwR45Z7pxXvsevWZ0zVOW8FKxpKHBbhkaJb9YwXAUmNvdZKUnW54NzXu9O3Qn8sySUGaPMo0oiUdEA6Bi-03ZaeDVYn4xRKX1todHIRMcfmao5EyTJkTsmWe8tVKe7tj-m8EoPPfLC-DUFiSyOi9-3kHqotBwijypwVvuIpffS6kPcV4a9W_CUkzobrkvWXgcwAuwJu_e", element: "Moonlight", icon: "brightness_2", symbol: "🌙", meaning: "Intuition & Reflection", vector: [2, 6, 8, 10, 4, 3, 9, 2, 8, 5, 4, 10], msg: "In the silence of the night, find the strength that doesn't need to shout.", desc: "You possess a quiet, luminous wisdom that guides others through dark hours.", strengths: ["Intuitive guidance", "Emotional resilience", "Deep empathy"], growth: "Learning to shine your own light even when there's no one to reflect it.", comp: { name: "Ocean Guardian", why: "shared emotional depth." }},
+            { name: "Star Guardian", id: "star", img: "https://lh3.googleusercontent.com/aida/AP1WRLsiy6r6gTAtezwp7BoQBVmoDe_cbm7aOd8DLmRDVymoyL6LOJNevw6If-3VdyogYNQhhZjB2Jb8Jhci0ZfVkkq161mxIa3BvTGR-OrPv8LgADL3QvK-vM4BV0l30xTwF3Uz_BdvJkeax3_pMh7flT3xH3wCHzWp7YIXxN-Et_nmeUvCwDeekfczE3VPTK_P0jN1IoIPuFMOlNlxJ-sjUOaUvCUWkkmIynXwvWWu6RjQrssMNAzPa-HXV5Q", element: "Stardust", icon: "star", symbol: "✨", meaning: "Hope & Guidance", vector: [5, 4, 9, 9, 7, 3, 5, 8, 3, 10, 2, 10], msg: "Distance doesn't mean disconnect; your light reaches further than you know.", desc: "You are a visionary whose perspective spans across the cosmic horizon.", strengths: ["Unwavering clarity", "Cosmic perspective"], growth: "Focusing on the beauty of the present moment.", comp: { name: "Cosmic Guardian", why: "shared understanding of vastness." }},
+            { name: "Aurora Guardian", id: "aurora", img: "https://lh3.googleusercontent.com/aida/AP1WRLsVMshd_1vb5jD5kRzmTvy9UBZa-3v4vP6kA99P4cE2VafAdVPEaCG6Et8oJkgakXiPIOT6h2AVpa0-Vw3mI0Lp_QtmdPIjI9VWkAwYha6JUGFfMzlAfaBOGXc93oxXEOvuM92-7OMbEOKvVYWJpIyxPUzOKlPOTYXkSDa6h6CIXEc2G1-CM5V1PDe52gIi4KZfJRD8njGRvpto6IU79S2Y5RMFSANGMYF1oUKchi6bh4qxSXb20yP_ml2v", element: "Luminous Ether", icon: "waves", symbol: "🌈", meaning: "Wonder & Creativity", vector: [4, 8, 5, 10, 10, 4, 6, 3, 9, 4, 3, 8], msg: "You are the bridge between the earth and the sky.", desc: "A spirit of wonder and bridges, connecting disparate worlds with grace.", strengths: ["Bridge building", "Adaptability"], growth: "Grounding your ethereal nature in practical steps.", comp: { name: "Wind Guardian", why: "wind carries beauty further." }},
+            { name: "Phoenix Guardian", id: "phoenix", img: "https://lh3.googleusercontent.com/aida/AP1WRLu89DbV-mT10u3QHmJoQkTwPUjBLxAfJnEx1QPWHrrkhv7kkf2kqv503Dg0-U3lERNG0l-Y2aTPDOHl8HRmaSer0Uiz6DeQdW9IBXEPffHX7GyAdtRtA_Us39QPJOCqU7OhRjqgoTpPb96-GvAGWsbp4NOERIcRcY656XUZyljzy_Z1Rhm0V3SvnXadyQbMhbo0ka9RGSyvaCq9EoVT4y7SgVyIvx9KzP-Rx9-U5uzgey4_w-O7NOX3He-k", element: "Sacred Fire", icon: "local_fire_department", symbol: "🔥", meaning: "Rebirth & Resilience", vector: [10, 3, 4, 6, 9, 10, 2, 7, 2, 8, 5, 6], msg: "Transformation is your soul's most powerful beginning.", desc: "Embodiment of transformation, fueled by challenges for every next evolution.", strengths: ["Indomitable will", "Creative fire"], growth: "Finding peace in the steady state.", comp: { name: "Sun Guardian", why: "constant energy fuels rebirth." }},
+            { name: "Ocean Guardian", id: "ocean", img: "https://lh3.googleusercontent.com/aida/AP1WRLvgaH42bQ123pTozZEIThaSYL9uGKhX6dU0qwKIIHsmMh60Ps2YY_yFpHKekFaRugC1eQz4DAlIdoVjw24aE1Llr8d4_PAIddgMvYCLHRzq7-lxZGPuLQMbTA4ug1aJIg7GjyQOOb7YpFbQAhs3Fl22vvbmLHMsP-NQ36l3ZahdJKJWRj--ESLKzh_buTiKROXAfyiVqH_yqNUN1PbdJMPrP4JDHZMmxWBYw9bpr9pMpDoKdKRrd3uzQVU", element: "Lunar Tides", icon: "water", symbol: "🌊", meaning: "Depth & Empathy", vector: [3, 9, 6, 9, 5, 8, 8, 4, 10, 3, 7, 6], msg: "Deep waters contain more life than the surface can hold.", desc: "A soul of immense depth and emotional intelligence, a source of calm.", strengths: ["Emotional intelligence", "Adaptable strength"], growth: "Recognizing that your own needs are as vast as the ocean.", comp: { name: "Moon Guardian", why: "moon guides the ocean's depth." }},
+            { name: "Forest Guardian", id: "forest", img: "https://lh3.googleusercontent.com/aida/AP1WRLu4CrWv65wkedQ2EAuxN6li1g27x2XDMqhU6jj2H7zngJxC1WmQ8JQwgMtWvyaI9C7WbK_WZBcPfI64zj9sIvZLEj_Ki7R9UPcFy0XbXhO40dp23mdNu9kJtw7uYerzNIYwEEEwvQbLWLHOyqzVDwbL06YMWXWRGr6_jk-UeC5ThOxopxPlcXsjKHy13_u73G3Ix46dbvrmNnpf46KnKodhgcUzsIYWNmMhGRoxA2S0W6aP1h6ZoOnNuKA", element: "Ancient Roots", icon: "park", symbol: "🌿", meaning: "Patience & Growth", vector: [5, 10, 8, 4, 3, 9, 10, 3, 9, 6, 10, 7], msg: "To grow tall, your roots must reach deep into the darkness.", desc: "Guardian of life and continuity, providing sanctuary through patient strength.", strengths: ["Patient growth", "Ancient grounding"], growth: "Accepting that the old must fall for the new.", comp: { name: "Dream Guardian", why: "forest provides safe space for dreams." }},
+            { name: "Sun Guardian", id: "sun", img: "https://lh3.googleusercontent.com/aida/AP1WRLvCbhg_ZY94Etgyywf0oGlqFtcEVGhYiNy6WamCJAD45YRsJKTz6IlnsXV0QSbdbvmW696KD3saraU4eMo77By5sbqAUADi5cc4NouNMwu8lRfrAeJ89QyqSYqiAdWAJh4ufcHrZDYol_A4PvPa7ukk1EeL3gEjSfkayO569-GD_nkHwaNAas1mJSi-4e9yv1MpswN762w_rkoQ1hnLyMk3arKeKTlTPE3iZNFvdi9DFucoFbqL7PavUD0", element: "Solar Flame", icon: "light_mode", symbol: "☀️", meaning: "Vitality & Leadership", vector: [10, 7, 5, 3, 6, 8, 4, 10, 5, 9, 7, 2], msg: "Be the warmth that wakes the world.", desc: "A source of vital energy and leadership, bringing warmth wherever you go.", strengths: ["Boundless energy", "Inspirational leadership"], growth: "Allowing yourself to set and rest.", comp: { name: "Phoenix Guardian", why: "shared cycle of brightness." }},
+            { name: "Wind Guardian", id: "wind", img: "https://lh3.googleusercontent.com/aida/AP1WRLvBiAw_q-_0HlmLJzy3yPGMFNswy4hUydPaunsNCCC2FOMQX5BHxCTY8vlNx96jIn9w_lGwuWc8e2Yz3MpFsePi18tBGK5BNpBI64ieE-ruP4FLl82yeyQezpg_LIK6_EVm379G-YvRlxJGEIwCtJywCXjkvfTOF5auHDWy85tCRU22mfwLsGhIcspWErulp27vCPjoAKGhA90DzbolRoDWZHIXbHCHXK6fnIzp9bgL9FSb9g3OP8PwmAJa", element: "Celestial Zephyr", icon: "air", symbol: "🌪️", meaning: "Freedom & Intellect", vector: [7, 5, 4, 8, 9, 5, 3, 6, 6, 10, 2, 5], msg: "To be free is to know exactly where you are going.", desc: "Spirit of movement and freedom, carrying ideas like seeds across landscapes.", strengths: ["Intellectual agility", "Freedom of spirit"], growth: "Learning to be still and listen.", comp: { name: "Dragon Guardian", why: "dragon provides form for the wind." }},
+            { name: "Crystal Guardian", id: "crystal", img: "https://lh3.googleusercontent.com/aida/AP1WRLuJ5aFv2Q8iEoH_S3kXAseLu8xRRYv8bsCuXWY6zXo6Veyjh5K9UlZr8luFJv-IwQ9MPqxgzTK78bulcWwoxENnuC3umqeZR09bmZjo_XeLhgbqatQ6SWG9nVbl2lbJqOWvCpdcBAQLOC6SbTJwDowxBzir9BdN4gNuQFUjDuIGN-2BsW0OlJc6inWa8Fw1Z2lHk7-ycmoJ8AYwziJALNECDIm-qA0sDrP5358UznFw9cDYUiLTekUz3Xmj", element: "Prismatic Earth", icon: "diamond", symbol: "💎", meaning: "Clarity & Stability", vector: [4, 5, 10, 6, 7, 7, 10, 5, 4, 10, 9, 4], msg: "Pressure turned your spirit into something eternal.", desc: "Spirit of structural integrity, refining raw experience into unbreakable wisdom.", strengths: ["Structural wisdom", "Inner clarity"], growth: "Learning that flexibility can be stronger.", comp: { name: "Forest Guardian", why: "crystal clarity aids forest growth." }},
+            { name: "Dream Guardian", id: "dream", img: "https://lh3.googleusercontent.com/aida/AP1WRLtcvT0WBDIlSrjA5TyCVTAxGRLkWHhUWH9uZXM54PPYm52DI1_Zx_VxrZ8w3uxqQrSKgYIiH8wQSjb8DJdyJFDekZ7Wwd6Q-4IIdNTuPqPHtb-iUDBesX7KoDJ6yNRSD7yGHyo9IMgVG73wOGCmjcNuchdB5SzQJN-fEcjfd74uO4BbiAFHQiDG6jZWB3c26KaFUcWMNwEY7VjK_JZ26pSWbHH3WKjgo7rMJ97A_9sqjd8L9Jzq8mksjSyT", element: "Indigo Mist", icon: "bedtime", symbol: "☁️", meaning: "Vision & Mystery", vector: [2, 5, 6, 10, 10, 3, 8, 2, 8, 4, 2, 10], msg: "The world you imagine is just as real as the one you walk in.", desc: "Walking the line between waking world and subconscious with profound imagination.", strengths: ["Creative visioning", "Soft resilience"], growth: "Translating dreams into tangible actions.", comp: { name: "Star Guardian", why: "stars guide the dreamer's mist." }},
+            { name: "Dragon Guardian", id: "dragon", img: "https://lh3.googleusercontent.com/aida/AP1WRLtYBQSZssnqKxlipQ95a_Y5DCRQYpmVlzRjcBEEAXwb6uVNvZovYas2LR_ch500ZyMYkgA2pFRGm1znxc8a-N7BUVbthKv11conRBg95fQUSoAW7Dczb23H3fWsgRV34vDSxTDvvhThiLMVw6uEKoQd0z1rIaIbOL6Ei1k4oSGK9YaHiwlf5NZQLs3MUCpYQcDT82WjgrkuGInZJq1tDOCm76J_m8FBbv8UC_kcLrD_QV4Dcb7DNUTh9AiB", element: "Obsidian Core", icon: "pets", symbol: "🐲", meaning: "Power & Protection", vector: [10, 4, 9, 5, 6, 10, 7, 10, 3, 8, 9, 4], msg: "Power is in what you choose to protect.", desc: "Immense power and ancient knowledge with a fierce protective instinct.", strengths: ["Primal strength", "Ancient knowledge"], growth: "Learning the strength of vulnerability.", comp: { name: "Sun Guardian", why: "shared primal high-frequency energy." }},
+            { name: "Cosmic Guardian", id: "cosmic", img: "https://lh3.googleusercontent.com/aida/AP1WRLvMxHh0uwPJlFsx79ara7GHQWtL2h7UefRxAnWjF3w1eQcZGqblzOpW79uWZ7Qr0NDuKjRgdPkdeF-2etoIDrjCpkzEpQ212gySLhV2nPrWFuyRAli7F7bLHZwJh4HBJ2ELWKhZtq8XJOKfs84_MlRk6T5XPFJyNL3xhQtHO9VJqBDCQZwSyJFg-3VJ07H_FFgFQs2jKUjE_uHabSCyGNb6y0wO5Lj9H1ctxz-WCZGACcPkVL46mjk7Vn39", element: "Void Essence", icon: "blur_on", symbol: "🌌", meaning: "Unity & Infinity", vector: [8, 7, 10, 10, 8, 8, 8, 8, 8, 10, 8, 10], msg: "You are the universe experiencing itself through your heart.", desc: "Rare spirit balancing all energies, seeing the totality of the journey.", strengths: ["Universal perspective", "Total harmony"], growth: "Focusing on small specific moments.", comp: { name: "all guardians", why: "contains pieces of every force." }}
+        ];
+    </script>
+<script id="questions.js">
+        const questions = [
+            { text: "Do you feel silence or the potential of a quiet room?", options: [{text: "Peace of Silence", scores: [2,6,10]}, {text: "Potential Action", scores: [0,4,7]}] },
+            { text: "Which call of nature is hardest to ignore?", options: [{text: "Deep Waters", scores: [3,8,9]}, {text: "Ancient Woods", scores: [6,10,11]}] },
+            { text: "In a storm, be the lightning or the shelter?", options: [{text: "Lightning", scores: [0,5,7]}, {text: "Shelter", scores: [1,6,10]}] },
+            { text: "Discovery made alone or a connection made?", options: [{text: "Alone", scores: [2,3,11]}, {text: "Connection", scores: [1,8,4]}] },
+            { text: "Climb over the wall or find the secret door?", options: [{text: "Climb Over", scores: [0,5,7]}, {text: "Secret Door", scores: [3,4,9]}] },
+            { text: "Which feels like home?", options: [{text: "Guiding Star", scores: [2,9,11]}, {text: "Life-giving Sun", scores: [0,1,7]}] },
+            { text: "Dusk and Shadow or Dawn and Radiance?", options: [{text: "Dusk", scores: [3,6,11]}, {text: "Dawn", scores: [4,7,9]}] },
+            { text: "Bury secrets or cast them to the wind?", options: [{text: "Bury Them", scores: [6,10,2]}, {text: "Cast Them", scores: [4,5,7]}] },
+            { text: "Leading the step or following the rhythm?", options: [{text: "Leading", scores: [0,7,9]}, {text: "Following", scores: [1,8,11]}] },
+            { text: "A lie as truth or cruelty in silence?", options: [{text: "Lie as Truth", scores: [9,10,2]}, {text: "Cruelty", scores: [1,8,6]}] },
+            { text: "Truth in facts or in dreams?", options: [{text: "Facts", scores: [9,10,5]}, {text: "Dreams", scores: [3,4,11]}] },
+            { text: "Mistakes as fuel or wounds to be healed?", options: [{text: "Fuel", scores: [0,5,7]}, {text: "Wounds", scores: [1,6,8]}] },
+            { text: "To Understand or To Create?", options: [{text: "Understand", scores: [2,3,11]}, {text: "Create", scores: [4,5,7]}] },
+            { text: "Mountain Top or Ocean Floor?", options: [{text: "Mountain Top", scores: [2,7,9]}, {text: "Ocean Floor", scores: [3,8,11]}] },
+            { text: "Freedom to Choose or Comfort of Belonging?", options: [{text: "Freedom", scores: [0,4,9]}, {text: "Belonging", scores: [1,8,10]}] }
+        ];
+    </script>
+<script id="ui.js">
+        let radarChartInstance = null;
+        function transitionTo(id) {
+            document.querySelectorAll('main > section').forEach(s => s.classList.add('hidden-screen'));
+            document.getElementById(id).classList.remove('hidden-screen');
+            window.scrollTo(0, 0);
+        }
+        function renderQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('question-counter').innerText = `Question ${currentQuestion + 1} of ${questions.length}`;
+            document.getElementById('progress-bar').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
+            document.getElementById('question-text').innerText = q.text;
+            const container = document.getElementById('answer-options');
+            container.innerHTML = '';
+            q.options.forEach(opt => {
+                const b = document.createElement('button');
+                b.className = "p-6 glass-panel rounded-2xl text-left hover:border-primary/40 hover:bg-primary/5 transition-all flex items-center justify-between group";
+                b.innerHTML = `<span class="font-medium">${opt.text}</span><span class="material-symbols-outlined text-primary opacity-0 group-hover:opacity-100">magic_button</span>`;
+                b.onclick = () => {
+                    opt.scores.forEach(s => scores[s] += 2);
+                    currentQuestion++;
+                    if (currentQuestion < questions.length) renderQuestion(); else processResults();
+                };
+                container.appendChild(b);
+            });
+        }
+        function initRadarChart(data) {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            if (radarChartInstance) radarChartInstance.destroy();
+            radarChartInstance = new Chart(ctx, {
+                type: 'radar',
+                data: { labels: traits, datasets: [{ label: 'Your Energy', data: data, backgroundColor: 'rgba(195,198,215,0.2)', borderColor: '#c3c6d7', borderWidth: 2, pointBackgroundColor: '#c3c6d7' }] },
+                options: { scales: { r: { min: 0, max: 10, ticks: { display: false }, grid: { color: 'rgba(255,255,255,0.1)' }, angleLines: { color: 'rgba(255,255,255,0.1)' }, pointLabels: { color: '#c7c6cc', font: { size: 10 } } } }, plugins: { legend: { display: false } } }
+            });
+        }
+        async function handleShare(match, topTraits) {
+            const text = `I found my Celestial Guardian: ${match.name}! ✨ Resonance: ${match.match}%. My top energies are ${topTraits.join(', ')}. Discover yours at Maple Chan.`;
+            if (navigator.share) {
+                try { await navigator.share({ title: 'Celestial Guardian', text: text, url: window.location.href }); } catch (e) { fallbackCopy(text); }
+            } else { fallbackCopy(text); }
+        }
+        function fallbackCopy(text) {
+            const area = document.createElement('textarea'); area.value = text; document.body.appendChild(area); area.select(); document.execCommand('copy'); document.body.removeChild(area);
+            const t = document.getElementById('toast'); t.className = "show"; setTimeout(() => t.className = t.className.replace("show", ""), 3000);
+        }
+    </script>
+<script id="quiz.js">
+        let currentQuestion = 0;
+        let scores = new Array(12).fill(0);
+        let userName = "Seeker";
+
+        function startQuiz() {
+            userName = document.getElementById('user-name').value.trim() || "Seeker";
+            if(userName.length < 2) { alert("Please share your name with the stars."); return; }
+            transitionTo('screen-quiz');
+            renderQuestion();
+        }
+
+        async function processResults() {
+            transitionTo('screen-loading');
+            const status = document.getElementById('loading-status'), sub = document.getElementById('loading-subtext');
+            const steps = [{m: "✨ YOUR GUARDIAN HAS AWAKENED ✨", s: "Listening to the stars..."}, {m: "Aligning soul frequencies...", s: `${userName}, the stars are converging.`}];
+            for (let step of steps) {
+                status.style.opacity = 0; sub.style.opacity = 0; await new Promise(r => setTimeout(r, 400));
+                status.innerText = step.m; sub.innerText = step.s; status.style.opacity = 1; sub.style.opacity = 1;
+                await new Promise(r => setTimeout(r, 1000));
+            }
+            const userVector = scores.map(s => Math.min(10, s));
+            const sortedTraits = traits.map((t, i) => ({ name: t, val: userVector[i] })).sort((a, b) => b.val - a.val);
+            const top3 = sortedTraits.slice(0, 3).map(t => t.name);
+            const res = archetypes.map(a => {
+                let dSq = 0; a.vector.forEach((v, i) => dSq += Math.pow(userVector[i] - v, 2));
+                return { ...a, match: Math.max(0, Math.min(100, Math.round((1 - Math.sqrt(dSq) / 30) * 100))) };
+            }).sort((a, b) => b.match - a.match);
+            const p = res[0];
+            document.getElementById('result-greeting').innerText = `${userName}, your guardian is...`;
+            document.getElementById('result-guardian-name').innerText = p.name;
+            document.getElementById('result-resonance').innerText = `Guardian Resonance: ${p.match}%`;
+            document.getElementById('result-guardian-message').innerText = `"${p.msg}"`;
+            document.getElementById('result-guardian-description').innerText = p.desc;
+            document.getElementById('result-image').src = p.img;
+            document.getElementById('result-element-icon').innerText = p.icon;
+            document.getElementById('result-element').innerText = `Element: ${p.element}`;
+            document.getElementById('result-meaning').innerText = `Meaning: ${p.meaning}`;
+            document.getElementById('guardian-symbol-bg').innerText = p.symbol;
+            document.getElementById('result-why').innerText = `Your resonance with ${top3.join(', ')} aligns with the ${p.name}.`;
+            document.getElementById('result-strengths').innerHTML = p.strengths.map(s => `<li>${s}</li>`).join('');
+            document.getElementById('result-growth').innerText = p.growth;
+            document.getElementById('secondary-matches').innerHTML = res.slice(1, 3).map(m => `<div class="flex justify-between p-3 rounded-xl bg-white/5 border border-white/5"><span>${m.name}</span><span class="text-secondary font-bold">${m.match}%</span></div>`).join('');
+            document.getElementById('trait-highlights').innerHTML = sortedTraits.slice(0, 5).map(t => `<div class="space-y-1"><div class="flex justify-between text-[10px] uppercase font-bold"><span>${t.name}</span><span>${t.val * 10}%</span></div><div class="h-1 w-full bg-white/5 rounded-full overflow-hidden"><div class="h-full bg-primary" style="width: ${t.val * 10}%"></div></div></div>`).join('');
+            document.getElementById('comp-box').innerHTML = `<h5 class="flex items-center gap-3 text-headline-md font-bold mb-4"><span class="material-symbols-outlined text-primary">favorite</span> Compatibility</h5><div class="flex items-center gap-4"><div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary"><span class="material-symbols-outlined">join_inner</span></div><div><span class="font-bold block">${p.comp.name}</span><p class="text-[10px] opacity-60">${p.comp.why}</p></div></div>`;
+            document.getElementById('share-name').innerText = userName;
+            document.getElementById('share-guardian').innerText = p.name;
+            document.getElementById('mini-result-img').src = p.img;
+            document.getElementById('btn-share').onclick = () => handleShare(p, top3);
+            transitionTo('screen-results');
+            initRadarChart(userVector);
+        }
+    </script>
+</body></html>
